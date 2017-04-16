@@ -1,28 +1,29 @@
-const express = require('express');
-const router = express.Router();
-const scrapeIt = require("scrape-it");
+import express from 'express';
+import scrapeIt from 'scrape-it';
+import Helpers from '../helpers/helper-functions';
 
+const router = express.Router();
 const url = "https://forum.paticik.com/list.php?2";
 
-// GET Areas listing
+// GET an area listing
 router.get('/', function (req, res, next) {
 
     // Callback interface
     scrapeIt(url, {
-        // Fetch the areas
+        // Fetch the topics
         topics: {
             listItem: ".messagelist tr",
             data: {
                 topicID: {
                     selector: "td:nth-child(2) a:nth-child(2)",
                     attr: "href",
-                    convert: x => getID(x)
+                    convert: x => Helpers.getID(x)
                 },
                 title: "td:nth-child(2) a:nth-child(2)",
                 lastPageQuery: {
                     selector: "td:nth-child(2) a:nth-child(3)",
                     attr: "href",
-                    convert: x => getlastPageQuery(x)
+                    convert: x => Helpers.getlastPageQuery(x)
                 },
                 msgCount: "td:nth-child(3)",
                 createdBy: {
@@ -30,7 +31,7 @@ router.get('/', function (req, res, next) {
                         id: {
                             selector: "td:nth-child(4) a",
                             attr: "href",
-                            convert: x => getID(x)
+                            convert: x => Helpers.getID(x)
                         },
                         name: "td:nth-child(4)"
                     }
@@ -43,19 +44,24 @@ router.get('/', function (req, res, next) {
                         },
                         time: {
                             selector: "td:nth-child(5)",
-                            convert: x => getTime(x)
+                            convert: x => Helpers.getTime(x)
                         },
                         user: {
                             data: {
                                 id: {
                                     selector: "td:nth-child(5) a",
                                     attr: "href",
-                                    convert: x => getID(x)
+                                    convert: x => Helpers.getID(x)
                                 },
                                 name: "td:nth-child(5) a"
                             }
                         }
                     }
+                },
+                topicType: {
+                    selector: "td:nth-child(1) img",
+                    attr: "src",
+                    convert: x => Helpers.getTopicType(x)
                 }
             }
         }
@@ -67,27 +73,3 @@ router.get('/', function (req, res, next) {
 });
 
 module.exports = router;
-
-function getID(id) {
-
-    if (id) {
-        return id.split("?").pop();
-    }
-    return id;
-}
-
-function getlastPageQuery(x) {
-
-    if (x) {
-        return x.substring(x.lastIndexOf("?") + 1, x.lastIndexOf("#"));
-    }
-    return x;
-}
-
-function getTime (x) {
-    if (x) {
-        let match = x.match(/([01]\d|2[0-3]):([0-5]\d)/)[0];
-        return match;
-    }
-    return x;
-}

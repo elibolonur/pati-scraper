@@ -1,6 +1,8 @@
-const express = require('express');
+import express from 'express';
+import scrapeIt from 'scrape-it';
+import Helpers from '../helpers/helper-functions';
+
 const router = express.Router();
-const scrapeIt = require("scrape-it");
 
 const url = "http://www.paticik.com";
 
@@ -16,15 +18,32 @@ router.get('/', function (req, res, next) {
                 areaID: {
                     selector: "td:nth-child(2) a",
                     attr: "href",
-                    convert: x => getAreaID(x)
+                    convert: x => Helpers.getID(x)
                 },
                 title: "td:nth-child(2) a",
                 description: "td:nth-child(2) small",
                 msgCount: "td:nth-child(3)",
-                lastMsgBy: "td:nth-child(4) a",
-                lastMsgDate: {
-                    selector: "td:nth-child(4)",
-                    convert: x => x.substring(0, x.indexOf(','))
+                lastMsg: {
+                    data: {
+                        date: {
+                            selector: "td:nth-child(4)",
+                            convert: x => x.substring(0, x.indexOf(','))
+                        },
+                        time: {
+                            selector: "td:nth-child(4)",
+                            convert: x => Helpers.getTime(x)
+                        },
+                        user: {
+                            data: {
+                                id: {
+                                    selector: "td:nth-child(4) a",
+                                    attr: "href",
+                                    convert: x => Helpers.getID(x)
+                                },
+                                name: "td:nth-child(4) a"
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -35,11 +54,3 @@ router.get('/', function (req, res, next) {
 });
 
 module.exports = router;
-
-function getAreaID (id) {
-
-    if (id) {
-        return id.split("?").pop();
-    }
-    return id;
-}
