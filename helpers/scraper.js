@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 const req = require("tinyreq");
-var iconv = require('iconv-lite');
+const iconv = require('iconv-lite');
 
 function Scraper() { }
 

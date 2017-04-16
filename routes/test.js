@@ -1,8 +1,9 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 // var sc = require('../helpers/scraper');
-const scrapeIt = require('scrape-it');
-const url = "http://www.paticik.com";
+var scrapeIt = require("scrape-it");
+
+var url = "http://www.paticik.com";
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
