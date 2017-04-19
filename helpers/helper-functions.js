@@ -8,10 +8,10 @@ class Helpers {
         return id;
     }
 
-    static getlastPageQuery(x) {
+    static getBetween(x, start, end) {
 
         if (x) {
-            return x.substring(x.lastIndexOf("?") + 1, x.lastIndexOf("#"));
+            return x.substring(x.lastIndexOf(start) + 1, x.lastIndexOf(end)).trim();
         }
         return x;
     }
@@ -35,6 +35,13 @@ class Helpers {
             else if (x.includes("message_locked.gif")) {
                 return "locked";
             }
+        }
+    }
+
+    static cleanMessageContent(x) {
+        if (x) {
+            // clear signature (so far so good lel)
+            return x.substring(0, x.indexOf("<hr size"));
         }
     }
 }

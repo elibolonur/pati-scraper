@@ -3,10 +3,13 @@ import scrapeIt from 'scrape-it';
 import Helpers from '../helpers/helper-functions';
 
 const router = express.Router();
-const url = "https://forum.paticik.com/list.php?2";
 
 // GET an area listing
 router.get('/', function (req, res, next) {
+
+
+    // let url = "https://forum.paticik.com/list.php?" + req.params.id;
+    let url = "https://forum.paticik.com/list.php?2";
 
     // Callback interface
     scrapeIt(url, {
@@ -23,7 +26,7 @@ router.get('/', function (req, res, next) {
                 lastPageQuery: {
                     selector: "td:nth-child(2) a:nth-child(3)",
                     attr: "href",
-                    convert: x => Helpers.getlastPageQuery(x)
+                    convert: x => Helpers.getBetween(x, "?", "#")
                 },
                 msgCount: "td:nth-child(3)",
                 createdBy: {
