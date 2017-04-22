@@ -6,7 +6,7 @@ import Helpers from '../helpers/helper-functions';
 
 const router = express.Router();
 
-// GET an area listing
+// GET area listing
 router.get('/', function (req, res, next) {
 
     // let url = "https://forum.paticik.com/read.php?" + req.params.id;
@@ -23,7 +23,7 @@ router.get('/', function (req, res, next) {
         }
 
         let scrapedData = scrapeIt.scrapeHTML(Helpers.decode(body), {
-            // Fetch the topics
+            // Fetch topics
             messages: {
                 listItem: ".readthread tr",
                 data: {

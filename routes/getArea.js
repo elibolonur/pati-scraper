@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', function (req, res, next) {
 
     // let url = "https://forum.paticik.com/list.php?" + req.params.id;
-    let url = "https://forum.paticik.com/list.php?5";
+    let url = "https://forum.paticik.com/list.php?3";
     let jar = request.jar();
 
     if (req.session.authCookie) {

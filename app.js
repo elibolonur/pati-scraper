@@ -10,6 +10,8 @@ const index = require('./routes/index');
 const mainPage = require('./routes/getMainPage');
 const area = require('./routes/getArea');
 const topic = require('./routes/getTopic');
+const followedTopics = require('./routes/getTopicsFollowed');
+const activeTopics = require('./routes/getActiveTopics');
 const login = require('./routes/login');
 
 const app = express();
@@ -38,6 +40,8 @@ app.use('/', index);
 app.use('/getMainPage', mainPage);
 app.use('/getArea', area);
 app.use('/getTopic', topic);
+app.use('/getFollowedTopics', followedTopics);
+app.use('/getActiveTopics', activeTopics);
 app.use('/login', login);
 
 // catch 404 and forward to error handler

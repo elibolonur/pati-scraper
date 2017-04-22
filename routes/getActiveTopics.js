@@ -6,10 +6,10 @@ import Helpers from '../helpers/helper-functions';
 
 const router = express.Router();
 
-// GET followed topics listing
+// GET active topics listing
 router.get('/', function (req, res, next) {
 
-    let url = "https://forum.paticik.com/control.php?0,panel=subthreads";
+    let url = "https://forum.paticik.com/addon.php?0,module=recent_messages";
     let jar = request.jar();
 
     if (req.session.authCookie) {
@@ -23,47 +23,61 @@ router.get('/', function (req, res, next) {
         }
 
         let scrapedData = scrapeIt.scrapeHTML(Helpers.decode(body), {
-            // Fetch followed topics
+            // Fetch active topics
             topics: {
                 listItem: "table.list tr",
                 data: {
                     topicID: {
-                        selector: "td:nth-child(3) a",
+                        selector: "td:nth-child(2) a:nth-child(1)",
                         attr: "href",
-                        convert: x => Helpers.getID(x)
+                        convert: x => Helpers.getBetweenSecond(x, "?", ",")
                     },
-                    title: "td:nth-child(3) a",
-                    area: "td:nth-child(3) small",
+                    title: "td:nth-child(2) a:nth-child(1)",
                     hasNewMsg: {
-                        selector: "td:nth-child(2) img",
+                        selector: "td:nth-child(1) img",
                         attr: "src",
                         convert: x => Helpers.hasTopicNewMessage(x)
                     },
                     newMsgQuery: {
-                        selector: "td:nth-child(2) a",
+                        selector: "td:nth-child(1) a",
+                        attr: "href",
+                        convert: x => Helpers.getID(x)
+                    },
+                    lastPageQuery: {
+                        selector: "td:nth-child(2) a:nth-child(2)",
                         attr: "href",
                         convert: x => Helpers.getID(x)
                     },
                     lastMsg: {
                         data: {
                             date: {
-                                selector: "td:nth-child(4)",
+                                selector: "td:nth-child(3)",
                                 convert: x => x.substring(0, x.indexOf(' '))
                             },
                             time: {
-                                selector: "td:nth-child(4)",
+                                selector: "td:nth-child(3)",
                                 convert: x => Helpers.getTime(x)
                             },
                             user: {
                                 data: {
                                     id: {
-                                        selector: "td:nth-child(4) a",
+                                        selector: "td:nth-child(3) a",
                                         attr: "href",
                                         convert: x => Helpers.getID(x)
                                     },
-                                    name: "td:nth-child(4) a"
+                                    name: "td:nth-child(3) a"
                                 }
                             }
+                        }
+                    },
+                    area: {
+                        data: {
+                            areaID: {
+                                selector: "td:nth-child(4) a",
+                                attr: "href",
+                                convert: x => Helpers.getID(x)
+                            },
+                            name: "td:nth-child(4) a"
                         }
                     }
                 }
@@ -72,8 +86,6 @@ router.get('/', function (req, res, next) {
 
         res.json(scrapedData);
     });
-
-
 });
 
 module.exports = router;

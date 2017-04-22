@@ -12,6 +12,11 @@ class Helpers {
 
     static getBetween(x, start, end) {
 
+        return x ? x.substring(x.lastIndexOf(start) + 1, x.lastIndexOf(end) + 1).trim() : x;
+    }
+
+    static getBetweenSecond(x, start, end) {
+
         return x ? x.substring(x.lastIndexOf(start) + 1, x.lastIndexOf(end)).trim() : x;
     }
 
