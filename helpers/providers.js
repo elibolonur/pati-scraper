@@ -1,4 +1,4 @@
-import * as jar from '../helpers/login/jar';
+import * as jar from './auth/request.jar';
 
 class Providers {
 

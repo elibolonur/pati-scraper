@@ -11,6 +11,8 @@ router.get('/', function (req, res, next) {
 
     // let url = "https://forum.paticik.com/list.php?" + req.params.id;
     let url = "https://forum.paticik.com/list.php?2";
+    console.log(req.sessionID);
+    console.log(req.session.cookie.isLoggedIn);
 
 
     request.get(Providers.settingsGet(url), function (err, response, body) {

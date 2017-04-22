@@ -4,7 +4,7 @@ let jar;
 
 module.exports = {
 
-    getJar: function () {
+    getJar: () => {
         if(jar) {
             return jar;
         }
@@ -14,7 +14,7 @@ module.exports = {
         }
     },
 
-    setJar: function (jarParam) {
+    setJar: (jarParam) => {
         jar = jarParam;
     }
 };

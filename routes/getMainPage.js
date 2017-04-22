@@ -3,6 +3,8 @@ import request from 'request';
 import scrapeIt from 'scrape-it';
 import Providers from '../helpers/providers';
 import Helpers from '../helpers/helper-functions';
+import * as auth from '../helpers/auth/auth.middleware';
+
 
 const router = express.Router();
 
@@ -14,7 +16,7 @@ router.get('/', function (req, res, next) {
     // Request
     request.get(Providers.settingsGet(url), function (err, response, body) {
         if (err) {
-            res.render('error', { error: err});
+            res.render('error', {error: err});
             return console.error(err.status);
         }
 
