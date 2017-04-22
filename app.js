@@ -31,7 +31,7 @@ app.use(session({
     saveUninitialized: true,
     unset: 'destroy',
     resave: true,
-    store: new fileStore(),
+    store: new fileStore()
 }));
 
 app.use('/', index);

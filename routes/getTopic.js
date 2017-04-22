@@ -10,9 +10,13 @@ const router = express.Router();
 router.get('/', function (req, res, next) {
 
     // let url = "https://forum.paticik.com/read.php?" + req.params.id;
-    let url = "https://forum.paticik.com/read.php?2,8634843";
+    let url = "https://forum.paticik.com/read.php?5,6267571,page=178";
 
-    request.get(Providers.settingsGet(url), function (err, response, body) {
+    let jar = request.jar();
+    if (req.session.authCookie)
+        jar.setCookie(req.session.authCookie, url);
+
+    request.get(Providers.settingsGet(url, jar), function (err, response, body) {
         if (err) {
             res.render('error', { error: err});
             return console.error(err.status);
@@ -50,6 +54,10 @@ router.get('/', function (req, res, next) {
                         selector: "td:nth-child(2) .body",
                         how: "html",
                         convert: x => Helpers.cleanMessageContent(x)
+                    },
+                    isNew: {
+                        selector: "td:nth-child(2) .pati_newflag",
+                        convert: x => Helpers.isMessageNew(x)
                     }
                 }
             },

@@ -10,14 +10,17 @@ const router = express.Router();
 router.get('/', function (req, res, next) {
 
     // let url = "https://forum.paticik.com/list.php?" + req.params.id;
-    let url = "https://forum.paticik.com/list.php?2";
-    console.log(req.sessionID);
-    console.log(req.session.cookie.isLoggedIn);
+    let url = "https://forum.paticik.com/list.php?5";
+    let jar = request.jar();
+
+    if (req.session.authCookie) {
+        jar.setCookie(req.session.authCookie, url);
+    }
 
 
-    request.get(Providers.settingsGet(url), function (err, response, body) {
+    request.get(Providers.settingsGet(url, jar), function (err, response, body) {
         if (err) {
-            res.render('error', { error: err});
+            res.render('error', {error: err});
             return console.error(err.status);
         }
 
@@ -38,6 +41,11 @@ router.get('/', function (req, res, next) {
                         convert: x => Helpers.getBetween(x, "?", "#")
                     },
                     msgCount: "td:nth-child(3)",
+                    hasNewMsg: {
+                        selector: "td:nth-child(1) img",
+                        attr: "src",
+                        convert: x => Helpers.hasTopicNewMessage(x)
+                    },
                     createdBy: {
                         data: {
                             id: {

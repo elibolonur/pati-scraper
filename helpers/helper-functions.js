@@ -12,16 +12,12 @@ class Helpers {
 
     static getBetween(x, start, end) {
 
-        if (x) {
-            return x.substring(x.lastIndexOf(start) + 1, x.lastIndexOf(end)).trim();
-        }
-        return x;
+        return x ? x.substring(x.lastIndexOf(start) + 1, x.lastIndexOf(end)).trim() : x;
     }
 
     static getTime(x) {
         if (x) {
-            let match = x.match(/([01]\d|2[0-3]):([0-5]\d)/)[0];
-            return match;
+            return x.match(/([01]\d|2[0-3]):([0-5]\d)/)[0];
         }
         return x;
     }
@@ -45,6 +41,16 @@ class Helpers {
             // clear signature (so far so good lel)
             return x.substring(0, x.indexOf("<hr size"));
         }
+    }
+
+    static hasTopicNewMessage(x) {
+        if (x) return (x.includes("message_new.gif") || x.includes("message_sticky_new.gif"));
+        return false;
+    }
+
+    static isMessageNew(x) {
+        if (x) return x.includes("yeni");
+        return false;
     }
 
     static decode(body) {
