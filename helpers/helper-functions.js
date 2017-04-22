@@ -1,3 +1,5 @@
+import iconv from 'iconv-lite';
+
 class Helpers {
 
     static getID(id) {
@@ -43,6 +45,10 @@ class Helpers {
             // clear signature (so far so good lel)
             return x.substring(0, x.indexOf("<hr size"));
         }
+    }
+
+    static decode(body) {
+        return iconv.decode(new Buffer(body), 'ISO-8859-9')
     }
 }
 
