@@ -59,16 +59,6 @@ router.get('/', function (req, res, next) {
                                 }
                             }
                         }
-                    },
-                    area: {
-                        data: {
-                            areaID: {
-                                selector: "td:nth-child(4) a",
-                                attr: "href",
-                                convert: x => Helpers.getAfterChar(x, "?")
-                            },
-                            name: "td:nth-child(4) a"
-                        }
                     }
                 }
             }
