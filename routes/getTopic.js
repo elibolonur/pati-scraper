@@ -53,7 +53,7 @@ router.get('/', function (req, res, next) {
                     content: {
                         selector: "td:nth-child(2) .body",
                         how: "html",
-                        convert: x => Helpers.cleanMessageContent(x)
+                        convert: x => Helpers.clearSignature(x)
                     },
                     isNew: {
                         selector: "td:nth-child(2) .pati_newflag",

@@ -13,6 +13,7 @@ const topic = require('./routes/getTopic');
 const followedTopics = require('./routes/getTopicsFollowed');
 const activeTopics = require('./routes/getActiveTopics');
 const msgPage = require('./routes/getMessagePage');
+const msg = require('./routes/getMessage');
 const login = require('./routes/login');
 
 const app = express();
@@ -44,6 +45,7 @@ app.use('/getTopic', topic);
 app.use('/getFollowedTopics', followedTopics);
 app.use('/getActiveTopics', activeTopics);
 app.use('/getMsgPage', msgPage);
+app.use('/getMessage', msg);
 app.use('/login', login);
 
 // catch 404 and forward to error handler
