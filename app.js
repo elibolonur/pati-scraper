@@ -12,6 +12,7 @@ const area = require('./routes/getArea');
 const topic = require('./routes/getTopic');
 const followedTopics = require('./routes/getTopicsFollowed');
 const activeTopics = require('./routes/getActiveTopics');
+const msgPage = require('./routes/getMessagePage');
 const login = require('./routes/login');
 
 const app = express();
@@ -42,6 +43,7 @@ app.use('/getArea', area);
 app.use('/getTopic', topic);
 app.use('/getFollowedTopics', followedTopics);
 app.use('/getActiveTopics', activeTopics);
+app.use('/getMsgPage', msgPage);
 app.use('/login', login);
 
 // catch 404 and forward to error handler

@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
                     topicID: {
                         selector: "td:nth-child(3) a",
                         attr: "href",
-                        convert: x => Helpers.getID(x)
+                        convert: x => Helpers.getAfterChar(x, "?")
                     },
                     title: "td:nth-child(3) a",
                     area: "td:nth-child(3) small",
@@ -42,7 +42,7 @@ router.get('/', function (req, res, next) {
                     newMsgQuery: {
                         selector: "td:nth-child(2) a",
                         attr: "href",
-                        convert: x => Helpers.getID(x)
+                        convert: x => Helpers.getAfterChar(x, "?")
                     },
                     lastMsg: {
                         data: {
@@ -59,7 +59,7 @@ router.get('/', function (req, res, next) {
                                     id: {
                                         selector: "td:nth-child(4) a",
                                         attr: "href",
-                                        convert: x => Helpers.getID(x)
+                                        convert: x => Helpers.getAfterChar(x, "?")
                                     },
                                     name: "td:nth-child(4) a"
                                 }

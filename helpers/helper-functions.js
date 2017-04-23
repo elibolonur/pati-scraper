@@ -2,10 +2,10 @@ import iconv from 'iconv-lite';
 
 class Helpers {
 
-    static getID(id) {
+    static getAfterChar(id, char) {
 
         if (id) {
-            return id.split("?").pop();
+            return id.split(char).pop();
         }
         return id;
     }
@@ -25,6 +25,12 @@ class Helpers {
             return x.match(/([01]\d|2[0-3]):([0-5]\d)/)[0];
         }
         return x;
+    }
+
+    static getDateRegex(x) {
+        if (x) {
+            return x.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/)[0];
+        }
     }
 
     static getTopicType(x) {
@@ -53,8 +59,13 @@ class Helpers {
         return false;
     }
 
-    static isMessageNew(x) {
+    static isPostNew(x) {
         if (x) return x.includes("yeni");
+        return false;
+    }
+
+    static isMessageNew(x) {
+        if (x) return x.includes("strong");
         return false;
     }
 

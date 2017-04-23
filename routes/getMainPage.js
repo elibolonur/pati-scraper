@@ -8,7 +8,7 @@ import * as auth from '../helpers/auth/auth.middleware';
 
 const router = express.Router();
 
-const url = "http://www.paticik.com";
+const url = "https://www.paticik.com";
 
 // GET Areas listing
 router.get('/', function (req, res, next) {
@@ -33,7 +33,7 @@ router.get('/', function (req, res, next) {
                     areaID: {
                         selector: "td:nth-child(2) a",
                         attr: "href",
-                        convert: x => Helpers.getID(x)
+                        convert: x => Helpers.getAfterChar(x, "?")
                     },
                     title: "td:nth-child(2) a",
                     description: "td:nth-child(2) small",
@@ -58,7 +58,7 @@ router.get('/', function (req, res, next) {
                                     id: {
                                         selector: "td:nth-child(4) a",
                                         attr: "href",
-                                        convert: x => Helpers.getID(x)
+                                        convert: x => Helpers.getAfterChar(x, "?")
                                     },
                                     name: "td:nth-child(4) a"
                                 }

@@ -36,7 +36,7 @@ router.get('/', function (req, res, next) {
                             id: {
                                 selector: "td:nth-child(1) div a",
                                 attr: "href",
-                                convert: x => Helpers.getID(x)
+                                convert: x => Helpers.getAfterChar(x, "?")
                             },
                             name: "td:nth-child(1) div a",
                             title: "td:nth-child(1) small span"
@@ -57,7 +57,7 @@ router.get('/', function (req, res, next) {
                     },
                     isNew: {
                         selector: "td:nth-child(2) .pati_newflag",
-                        convert: x => Helpers.isMessageNew(x)
+                        convert: x => Helpers.isPostNew(x)
                     }
                 }
             },

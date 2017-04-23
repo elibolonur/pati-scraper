@@ -41,18 +41,18 @@ router.get('/', function (req, res, next) {
                     newMsgQuery: {
                         selector: "td:nth-child(1) a",
                         attr: "href",
-                        convert: x => Helpers.getID(x)
+                        convert: x => Helpers.getAfterChar(x, "?")
                     },
                     lastPageQuery: {
                         selector: "td:nth-child(2) a:nth-child(2)",
                         attr: "href",
-                        convert: x => Helpers.getID(x)
+                        convert: x => Helpers.getAfterChar(x, "?")
                     },
                     lastMsg: {
                         data: {
                             date: {
                                 selector: "td:nth-child(3)",
-                                convert: x => x.substring(0, x.indexOf(' '))
+                                convert: x => Helpers.getDateRegex(x)
                             },
                             time: {
                                 selector: "td:nth-child(3)",
@@ -63,7 +63,7 @@ router.get('/', function (req, res, next) {
                                     id: {
                                         selector: "td:nth-child(3) a",
                                         attr: "href",
-                                        convert: x => Helpers.getID(x)
+                                        convert: x => Helpers.getAfterChar(x, "?")
                                     },
                                     name: "td:nth-child(3) a"
                                 }
@@ -75,7 +75,7 @@ router.get('/', function (req, res, next) {
                             areaID: {
                                 selector: "td:nth-child(4) a",
                                 attr: "href",
-                                convert: x => Helpers.getID(x)
+                                convert: x => Helpers.getAfterChar(x, "?")
                             },
                             name: "td:nth-child(4) a"
                         }
