@@ -39,7 +39,12 @@ router.get('/', function (req, res, next) {
                                 convert: x => Helpers.getAfterChar(x, "?")
                             },
                             name: "td:nth-child(1) div a",
-                            title: "td:nth-child(1) small span"
+                            title: "td:nth-child(1) small span",
+                            medals: {
+                                selector: "td:nth-child(1) small",
+                                how: "html",
+                                convert: x => Helpers.countMedals(x)
+                            }
                         }
                     },
                     date: {

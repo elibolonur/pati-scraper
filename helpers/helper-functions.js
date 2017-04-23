@@ -47,6 +47,29 @@ class Helpers {
         }
     }
 
+    static countMedals (x) {
+        if (x) {
+            if (x.includes("medal_10k.gif")) {
+                return 3;
+            }
+            else if (x.includes("medal_5k.gif")) {
+                return 2;
+            }
+            else if (x.includes("medal_1k.gif")) {
+                return 1;
+            }
+            else return 0;
+        }
+    }
+
+    static getMsgCountFromProfile(x) {
+        if (x) {
+            // match <dd>number</dd> tag, remove tags with replace
+            return x.match(/(?:(<dd>))[1-9]\d{0,5}(?:(<\/dd>))/g)[0].replace(/(<([^>]+)>)/ig,"");
+        }
+
+    }
+
     static clearSignature(x) {
         if (x) {
             // clear signature (so far so good lel)
