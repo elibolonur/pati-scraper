@@ -47,7 +47,7 @@ class Helpers {
         }
     }
 
-    static cleanMessageContent(x) {
+    static clearSignature(x) {
         if (x) {
             // clear signature (so far so good lel)
             return x.substring(0, x.indexOf("<hr size"));
