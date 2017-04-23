@@ -79,6 +79,11 @@ router.get('/', function (req, res, next) {
                             },
                             name: "td:nth-child(4) a"
                         }
+                    },
+                    topicType: {
+                        selector: "td:nth-child(1) img",
+                        attr: "src",
+                        convert: x => Helpers.getTopicType(x)
                     }
                 }
             }

@@ -38,12 +38,22 @@ class Helpers {
             if (x.includes("message_sticky.gif")) {
                 return "sticky";
             }
+            else if (x.includes("message_sticky_new.gif")) {
+                return "sticky_new";
+            }
             else if (x.includes("message_sticky_locked.gif")) {
                 return "sticky_locked";
             }
             else if (x.includes("message_locked.gif")) {
                 return "locked";
             }
+            else if (x.includes("message_new.gif")) {
+                return "new";
+            }
+            else {
+                return null;
+            }
+
         }
     }
 
