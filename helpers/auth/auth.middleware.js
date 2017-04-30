@@ -43,5 +43,17 @@ module.exports = {
             }
             res.redirect('/')
         }
+    },
+
+    checkTopicID: () => {
+        return function (req, res, next) {
+            if (!req.body.topicID) {
+                res.json(new ApiResponse(false, "Unspecified topic!"));
+            }
+            else {
+                return next();
+            }
+            res.redirect('/')
+        }
     }
 };

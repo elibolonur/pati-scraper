@@ -10,7 +10,7 @@ import * as auth from '../helpers/auth/auth.middleware';
 const router = express.Router();
 const url = "https://www.paticik.com";
 
-// GET Areas listing
+// Areas listing
 router.post('/', auth.checkApiKey(), auth.checkAuthCookie(), function (req, res, next) {
 
     let jar = request.jar();
@@ -24,7 +24,7 @@ router.post('/', auth.checkApiKey(), auth.checkAuthCookie(), function (req, res,
         }
 
         let scrapedData = scrapeIt.scrapeHTML(Helpers.decode(body), {
-            // Fetch areas
+            // Fetch areas in main page
             areas: {
                 listItem: ".forum",
                 data: {

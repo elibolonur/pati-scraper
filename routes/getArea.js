@@ -8,15 +8,13 @@ import * as auth from '../helpers/auth/auth.middleware';
 
 const router = express.Router();
 
-// GET an area listing
+// Area listing
 router.post('/',
     auth.checkApiKey(),
     auth.checkAuthCookie(),
     auth.checkAreaID(), function (req, res, next) {
 
-    console.log(req.body);
     let url = "https://forum.paticik.com/list.php?" + req.body.areaID;
-    console.log(url);
     let jar = request.jar();
     jar.setCookie(req.body.authCookie, url);
 
@@ -28,7 +26,7 @@ router.post('/',
         }
 
         let scrapedData = scrapeIt.scrapeHTML(Helpers.decode(body), {
-            // Fetch the topics
+            // Fetch topics in an area
             topics: {
                 listItem: ".messagelist tr",
                 data: {

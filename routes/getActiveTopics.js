@@ -6,7 +6,7 @@ import Helpers from '../helpers/helperFunctions';
 
 const router = express.Router();
 
-// GET active topics listing
+// Active topics listing
 router.get('/', function (req, res, next) {
 
     let url = "https://forum.paticik.com/addon.php?0,module=recent_messages";

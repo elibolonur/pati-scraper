@@ -66,15 +66,31 @@ class Helpers {
     static countMedals(x) {
         if (x) {
             if (x.includes("medal_10k.gif")) {
-                return 3;
+                return [1,2,3];
             }
             else if (x.includes("medal_5k.gif")) {
-                return 2;
+                return [1,2];
             }
             else if (x.includes("medal_1k.gif")) {
-                return 1;
+                return [1];
             }
-            else return 0;
+            else return [];
+        }
+    }
+
+    static getUserTitle(x) {
+        if (x) {
+            if (x.includes("Y&#xF6;r&#xFC;nge Disi")) {
+                return {isSpecial: false, name: "Yörünge Disi"};
+            }
+            else if (x.includes("&#xDC;ye")) {
+                return {isSpecial: false, name: "Üye"};
+            }
+            else {
+                let cheerio = require('cheerio');
+                let $ = cheerio.load(x);
+                return {isSpecial: true, name: $('span').text()};
+            }
         }
     }
 
@@ -83,13 +99,14 @@ class Helpers {
             // match <dd>number</dd> tag, remove tags with replace
             return x.match(/(?:(<dd>))[1-9]\d{0,5}(?:(<\/dd>))/g)[0].replace(/(<([^>]+)>)/ig, "");
         }
-
     }
 
-    static clearSignature(x) {
+    static parseMsgBody(x) {
         if (x) {
-            // clear signature (so far so good lel)
-            return x.substring(0, x.indexOf("<hr size"));
+            let cheerio = require('cheerio');
+            let $ = cheerio.load(x);
+
+            return $('.body').html();
         }
     }
 
