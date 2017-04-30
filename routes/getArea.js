@@ -1,26 +1,29 @@
 import express from 'express';
 import request from 'request';
 import scrapeIt from 'scrape-it';
-import Providers from '../helpers/providers';
-import Helpers from '../helpers/helper-functions';
+import { ReqSettings } from '../helpers/requestSettings';
+import { ApiResponse } from '../helpers/responseModel';
+import Helpers from '../helpers/helperFunctions';
+import * as auth from '../helpers/auth/auth.middleware';
 
 const router = express.Router();
 
 // GET an area listing
-router.get('/', function (req, res, next) {
+router.post('/',
+    auth.checkApiKey(),
+    auth.checkAuthCookie(),
+    auth.checkAreaID(), function (req, res, next) {
 
-    // let url = "https://forum.paticik.com/list.php?" + req.params.id;
-    let url = "https://forum.paticik.com/list.php?3";
+    console.log(req.body);
+    let url = "https://forum.paticik.com/list.php?" + req.body.areaID;
+    console.log(url);
     let jar = request.jar();
-
-    if (req.session.authCookie) {
-        jar.setCookie(req.session.authCookie, url);
-    }
+    jar.setCookie(req.body.authCookie, url);
 
 
-    request.get(Providers.settingsGet(url, jar), function (err, response, body) {
+    request.get(ReqSettings.settingsGet(url, jar), function (err, response, body) {
         if (err) {
-            res.render('error', {error: err});
+            res.json(new ApiResponse(false, err));
             return console.error(err.status);
         }
 
@@ -87,7 +90,7 @@ router.get('/', function (req, res, next) {
             }
         });
 
-        res.json(scrapedData);
+        res.json(new ApiResponse(true, "Bölüm yüklendi", scrapedData.topics));
     });
 
 

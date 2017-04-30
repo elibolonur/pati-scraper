@@ -3,10 +3,11 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const fileStore = require('session-file-store')(session);
+
+const cors = require('cors');
 
 const index = require('./routes/index');
+const login = require('./routes/login');
 const mainPage = require('./routes/getMainPage');
 const area = require('./routes/getArea');
 const topic = require('./routes/getTopic');
@@ -14,8 +15,8 @@ const followedTopics = require('./routes/getTopicsFollowed');
 const activeTopics = require('./routes/getActiveTopics');
 const msgPage = require('./routes/getMessagePage');
 const msg = require('./routes/getMessage');
+const postTopic = require('./routes/postTopic');
 const profile = require('./routes/getProfile');
-const login = require('./routes/login');
 
 const app = express();
 
@@ -26,20 +27,13 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(session({
-    name: app.sess,
-    secret: 'SEKR37_pati',
-    saveUninitialized: true,
-    unset: 'destroy',
-    resave: true,
-    store: new fileStore()
-}));
+app.use(cors());
 
 app.use('/', index);
+app.use('/login', login);
 app.use('/getMainPage', mainPage);
 app.use('/getArea', area);
 app.use('/getTopic', topic);
@@ -47,8 +41,8 @@ app.use('/getFollowedTopics', followedTopics);
 app.use('/getActiveTopics', activeTopics);
 app.use('/getMsgPage', msgPage);
 app.use('/getMessage', msg);
+app.use('/postTopic', postTopic);
 app.use('/getProfile', profile);
-app.use('/login', login);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

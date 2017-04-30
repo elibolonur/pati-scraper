@@ -1,16 +1,45 @@
+import { ApiResponse } from '../responseModel';
+
+const apiKey = "16a7cf79db61b9cab7c2563ef949947b818064083ecef72e5899f887814d2bc9";
+
 module.exports = {
-    required: () => {
+
+    checkApiKey: () => {
         return function (req, res, next) {
-            if (req.session.isLoggedIn === true) {
-                return next()
-            }
-            else if (req.session.isLoggedIn === false) {
-                res.redirect('/')
+            if (req.body.apiKey) {
+                if (req.body.apiKey !== apiKey) {
+                    res.json(new ApiResponse(false, "You can't access the API outside of the App!"));
+                }
+                else {
+                    return next();
+                }
             }
             else {
-                req.session.isLoggedIn = false;
-                console.log(req.session.isLoggedIn);
                 res.redirect('/')
+            }
+            res.redirect('/')
+        }
+    },
+
+    checkAuthCookie: () => {
+        return function (req, res, next) {
+            if (!req.body.authCookie) {
+                res.json(new ApiResponse(false, "You are not logged in!"));
+            }
+            else {
+                return next();
+            }
+            res.redirect('/')
+        }
+    },
+
+    checkAreaID: () => {
+        return function (req, res, next) {
+            if (!req.body.areaID) {
+                res.json(new ApiResponse(false, "Unspecified area!"));
+            }
+            else {
+                return next();
             }
             res.redirect('/')
         }

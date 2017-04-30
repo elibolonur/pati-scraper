@@ -1,4 +1,5 @@
 import iconv from 'iconv-lite';
+import { areaList } from "./areaList";
 
 class Helpers {
 
@@ -13,6 +14,11 @@ class Helpers {
     static getBetween(x, start, end) {
 
         return x ? x.substring(x.lastIndexOf(start) + 1, x.lastIndexOf(end) + 1).trim() : x;
+    }
+
+    static getBetweenFirst(x, start, end) {
+
+        return x ? x.substring(x.lastIndexOf(start) + 1, x.indexOf(end)).trim() : x;
     }
 
     static getBetweenSecond(x, start, end) {
@@ -36,19 +42,19 @@ class Helpers {
     static getTopicType(x) {
         if (x) {
             if (x.includes("message_sticky.gif")) {
-                return "sticky";
+                return "message_sticky";
             }
             else if (x.includes("message_sticky_new.gif")) {
-                return "sticky_new";
+                return "message_sticky_new";
             }
             else if (x.includes("message_sticky_locked.gif")) {
-                return "sticky_locked";
+                return "message_sticky_locked";
             }
             else if (x.includes("message_locked.gif")) {
-                return "locked";
+                return "message_locked";
             }
             else if (x.includes("message_new.gif")) {
-                return "new";
+                return "message_new";
             }
             else {
                 return null;
@@ -57,7 +63,7 @@ class Helpers {
         }
     }
 
-    static countMedals (x) {
+    static countMedals(x) {
         if (x) {
             if (x.includes("medal_10k.gif")) {
                 return 3;
@@ -75,7 +81,7 @@ class Helpers {
     static getMsgCountFromProfile(x) {
         if (x) {
             // match <dd>number</dd> tag, remove tags with replace
-            return x.match(/(?:(<dd>))[1-9]\d{0,5}(?:(<\/dd>))/g)[0].replace(/(<([^>]+)>)/ig,"");
+            return x.match(/(?:(<dd>))[1-9]\d{0,5}(?:(<\/dd>))/g)[0].replace(/(<([^>]+)>)/ig, "");
         }
 
     }
@@ -101,6 +107,27 @@ class Helpers {
         if (x) return x.includes("strong");
         return false;
     }
+
+    static getAreaParent(x) {
+        if (x) {
+            if (x.includes("favorites")) {
+                return "favorites";
+            }
+            else if (x) {
+                return areaList.find(a => a.link.includes(x)).parent;
+            }
+        }
+    }
+
+    static getAreaID(x) {
+        if (x) {
+            return x.replace( /[^\d]*/g, '');
+        }
+        else {
+            return x;
+        }
+    }
+
 
     static decode(body) {
         return iconv.decode(new Buffer(body), 'ISO-8859-9')

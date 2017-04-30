@@ -1,8 +1,8 @@
 import express from 'express';
 import request from 'request';
 import scrapeIt from 'scrape-it';
-import Providers from '../helpers/providers';
-import Helpers from '../helpers/helper-functions';
+import { ReqSettings } from '../helpers/requestSettings';
+import Helpers from '../helpers/helperFunctions';
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
     if (req.session.authCookie)
         jar.setCookie(req.session.authCookie, url);
 
-    request.get(Providers.settingsGet(url, jar), function (err, response, body) {
+    request.get(ReqSettings.settingsGet(url, jar), function (err, response, body) {
         if (err) {
             res.render('error', { error: err});
             return console.error(err.status);
