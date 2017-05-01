@@ -66,10 +66,10 @@ class Helpers {
     static countMedals(x) {
         if (x) {
             if (x.includes("medal_10k.gif")) {
-                return [1,2,3];
+                return [1, 2, 3];
             }
             else if (x.includes("medal_5k.gif")) {
-                return [1,2];
+                return [1, 2];
             }
             else if (x.includes("medal_1k.gif")) {
                 return [1];
@@ -102,7 +102,6 @@ class Helpers {
     }
 
     static parseMsgBody(x) {
-        console.log(x);
         if (x) {
             let cheerio = require('cheerio');
             let $ = cheerio.load(x);
@@ -139,13 +138,19 @@ class Helpers {
 
     static getAreaID(x) {
         if (x) {
-            return x.replace( /[^\d]*/g, '');
+            return x.replace(/[^\d]*/g, '');
         }
         else {
             return x;
         }
     }
 
+    static getCookieValue(cookie) {
+        if (cookie) {
+            return cookie.substring(cookie.indexOf("=") + 1, cookie.indexOf(";") + 1);
+        }
+        return "";
+    }
 
     static decode(body) {
         return iconv.decode(new Buffer(body), 'ISO-8859-9')

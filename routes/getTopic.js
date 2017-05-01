@@ -5,6 +5,7 @@ import { ReqSettings } from '../helpers/requestSettings';
 import { ApiResponse } from '../helpers/responseModel';
 import Helpers from '../helpers/helperFunctions';
 import * as auth from '../helpers/auth/auth.middleware';
+import cheerio from 'cheerio';
 
 const router = express.Router();
 
@@ -15,16 +16,18 @@ router.post('/',
     auth.checkTopicID(),
     function (req, res, next) {
 
-        var Nightmare = require('nightmare');
-        var nightmare = Nightmare({ show: false });
+        let Nightmare = require('nightmare');
+        let nightmare = Nightmare({ show: false });
 
         let url = "https://forum.paticik.com/read.php?" + req.body.topicID;
         // let url = "https://forum.paticik.com/read.php?5,8501665";
 
-        // ADD COOKIE
         nightmare
-            .goto(url)
+            .goto(url,{
+                Cookie: "phorum_session_v5=" + Helpers.getCookieValue(req.body.authCookie)
+            })
             .wait()
+            .cookies.get()
             .evaluate(function(){
                 function sleep(ms) {
                     var start = new Date().getTime(), expire = start + ms;
@@ -44,7 +47,12 @@ router.post('/',
             .end()
             .then(function (body) {
 
-                let scrapedData = scrapeIt.scrapeHTML(body, {
+                // Clear unnecessary items
+                let ch = cheerio.load(body);
+                ch('script').remove();
+                ch('.mod_jumpmenu_menu').remove();
+
+                let scrapedData = scrapeIt.scrapeHTML(ch.html(), {
                     // Fetch topic messages
                     messages: {
                         listItem: ".readthread tr",
@@ -101,7 +109,7 @@ router.post('/',
                 res.json(new ApiResponse(true, "Konu yüklendi", scrapedData.messages));
             })
             .catch(function (error) {
-                console.error('Search failed:', error);
+                res.json(new ApiResponse(false, error));
             });
 
         // let jar = request.jar();
