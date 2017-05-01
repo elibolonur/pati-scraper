@@ -102,6 +102,7 @@ class Helpers {
     }
 
     static parseMsgBody(x) {
+        console.log(x);
         if (x) {
             let cheerio = require('cheerio');
             let $ = cheerio.load(x);
