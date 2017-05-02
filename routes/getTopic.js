@@ -100,13 +100,13 @@ router.post('/',
                             }
                         }
                     },
-                    pageCount: {
-                        selector: ".pati_paging form a",
-                        eq: 0
+                    maxPages: {
+                        selector: ".pati_paging_select option:last-child",
+                        attr: "value"
                     }
                 });
                 // res.send(JSON.stringify(scrapedData.messages, null, 2));
-                res.json(new ApiResponse(true, "Konu yüklendi", scrapedData.messages));
+                res.json(new ApiResponse(true, "Konu yüklendi", scrapedData));
             })
             .catch(function (error) {
                 res.json(new ApiResponse(false, error));

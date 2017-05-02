@@ -85,10 +85,15 @@ router.post('/',
                         convert: x => Helpers.getTopicType(x)
                     }
                 }
+            },
+            maxPages: {
+                selector: ".pati_paging b",
+                eq: 0,
+                convert: x => Helpers.getMaxPageValue(x)
             }
         });
 
-        res.json(new ApiResponse(true, "Bölüm yüklendi", scrapedData.topics));
+        res.json(new ApiResponse(true, "Bölüm yüklendi", scrapedData));
     });
 
 

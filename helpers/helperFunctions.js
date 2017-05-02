@@ -140,9 +140,14 @@ class Helpers {
         if (x) {
             return x.replace(/[^\d]*/g, '');
         }
-        else {
-            return x;
+        return x;
+    }
+
+    static getMaxPageValue(x) {
+        if (x) {
+            return x.match(/\d+/g).map(Number)[1];
         }
+        return x;
     }
 
     static getCookieValue(cookie) {
