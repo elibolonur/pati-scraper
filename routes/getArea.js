@@ -35,7 +35,10 @@ router.post('/',
                         attr: "href",
                         convert: x => Helpers.getAfterChar(x, "?")
                     },
-                    title: "td:nth-child(2) a:nth-child(2)",
+                    title: {
+                        selector: "td:nth-child(2) a",
+                        eq: 1
+                    },
                     lastPageQuery: {
                         selector: "td:nth-child(2) a:nth-child(3)",
                         attr: "href",
