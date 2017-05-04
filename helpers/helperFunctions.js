@@ -110,6 +110,15 @@ class Helpers {
         }
     }
 
+    static parsePmBody(x) {
+        if (x) {
+            let cheerio = require('cheerio');
+            let $ = cheerio.load(x);
+
+            return $.html();
+        }
+    }
+
     static hasTopicNewMessage(x) {
         if (x) return (x.includes("message_new.gif") || x.includes("message_sticky_new.gif"));
         return false;

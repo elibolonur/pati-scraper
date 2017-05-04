@@ -55,5 +55,17 @@ module.exports = {
             }
             res.redirect('/')
         }
+    },
+
+    checkPmID: () => {
+        return function (req, res, next) {
+            if (!req.body.pmID) {
+                res.json(new ApiResponse(false, "Unspecified PM!"));
+            }
+            else {
+                return next();
+            }
+            res.redirect('/')
+        }
     }
 };

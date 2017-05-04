@@ -26,7 +26,7 @@ router.post('/', auth.checkApiKey(), auth.checkAuthCookie(),  function (req, res
             pms: {
                 listItem: "table.list tr",
                 data: {
-                    msgID: {
+                    id: {
                         selector: "td:nth-child(2) a",
                         attr: "href",
                         convert: x => Helpers.getAfterChar(x, "=")
