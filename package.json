@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "babel-node ./bin/www",
+    "start": "./node_modules/.bin/babel-node ./bin/www",
     "dev": "nodemon ./bin/www --exec babel-node --presets es2015"
   },
   "dependencies": {
