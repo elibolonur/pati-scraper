@@ -98,8 +98,6 @@ router.post('/',
 
             res.json(new ApiResponse(true, "Bölüm yüklendi", scrapedData));
         });
-
-
     });
 
 module.exports = router;
