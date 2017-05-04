@@ -2,29 +2,28 @@ import express from 'express';
 import request from 'request';
 import scrapeIt from 'scrape-it';
 import { ReqSettings } from '../helpers/requestSettings';
+import { ApiResponse } from '../helpers/responseModel';
 import Helpers from '../helpers/helperFunctions';
+import * as auth from '../helpers/auth/auth.middleware';
 
 const router = express.Router();
 
 // GET messages listing
-router.get('/', function (req, res, next) {
+router.post('/', auth.checkApiKey(), auth.checkAuthCookie(),  function (req, res, next) {
 
     let url = "https://forum.paticik.com/pm.php";
     let jar = request.jar();
-
-    if (req.session.authCookie) {
-        jar.setCookie(req.session.authCookie, url);
-    }
+    jar.setCookie(req.body.authCookie, url);
 
     request.get(ReqSettings.settingsGet(url, jar), function (err, response, body) {
         if (err) {
-            res.render('error', {error: err});
+            res.json(new ApiResponse(false, err));
             return console.error(err.status);
         }
 
         let scrapedData = scrapeIt.scrapeHTML(Helpers.decode(body), {
             // Fetch messages
-            messages: {
+            pms: {
                 listItem: "table.list tr",
                 data: {
                     msgID: {
@@ -48,7 +47,7 @@ router.get('/', function (req, res, next) {
                                 selector: "td:nth-child(3)",
                                 convert: x => Helpers.getTime(x)
                             },
-                            user: {
+                            sender: {
                                 data: {
                                     id: {
                                         selector: "td:nth-child(3) a",
@@ -64,7 +63,7 @@ router.get('/', function (req, res, next) {
             }
         });
 
-        res.json(scrapedData);
+        res.json(new ApiResponse(true, "Bölüm yüklendi", scrapedData.pms));
     });
 });
 
