@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "./node_modules/.bin/babel-node ./bin/www",
+    "start": "nodemon ./bin/www --exec babel-node --presets es2015",
     "dev": "nodemon ./bin/www --exec babel-node --presets es2015"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
     "nightmare": "^2.10.0",
+    "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "scrape-it": "^3.3.2",
     "serve-favicon": "~2.4.2"
