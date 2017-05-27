@@ -6,6 +6,7 @@ export const areaList = [
     {link: 'https://forum.paticik.com/list.php?7', parent: "patitech"},
     {link: 'https://forum.paticik.com/list.php?97', parent: "patitech"},
     {link: 'https://forum.paticik.com/list.php?8', parent: "patitech"},
+    {link: 'https://forum.paticik.com/list.php?103', parent: "patitech"},
     {link: 'https://forum.paticik.com/list.php?73', parent: "patizone"},
     {link: 'https://forum.paticik.com/list.php?10', parent: "patizone"},
     {link: 'https://forum.paticik.com/list.php?11', parent: "patizone"},
