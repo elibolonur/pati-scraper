@@ -4,3 +4,5 @@ public/img/
 public/js/
 npm-debug.log
 routes/postTopic.js
+node_modules
+.idea
